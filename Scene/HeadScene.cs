@@ -29,7 +29,10 @@ public class HeadScene : MonoBehaviour
         //StartCoroutine(Init());
         SceneManager.LoadSceneAsync(0);
     }
-
+    /// <summary>
+    /// 控制场景切换旋转与屏幕方向
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator Init()
     {
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
