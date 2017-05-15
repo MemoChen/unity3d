@@ -1,0 +1,27 @@
+///
+///AB包加载后再实例化
+///
+///
+
+using UnityEngine;
+using System.Collections;
+public class DownloadAsset : MonoBehaviour
+{
+    public string BundleURL;      //定义URL字符串   
+    public string AssetName;      //定义资源名字字符串
+    IEnumerator Start()
+    {
+        using (WWW www = new WWW(BundleURL))
+        {  //创建一个网页链接请求，并赋给www
+            yield return www;       //返回www的值
+            if (www.error != null)      //如果下载过程中出现错误
+                Debug.Log("WWW download had an error:" + www.error);  //打印错误的提示信息
+            AssetBundle bundle = www.assetBundle;  //下载AssetBundle
+            if (AssetName == "")      //如果没有指定具体的资源名字
+                Instantiate(bundle.mainAsset);    //实例化主资源
+            else
+                Instantiate(bundle.LoadAsset(AssetName)); //否则实例化指定名字的资源
+            bundle.Unload(false);      //释放bundle的序列化数据
+        }
+    }
+}
